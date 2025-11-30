@@ -3,13 +3,13 @@ import { createStaticNavigation, StaticParamList } from '@react-navigation/nativ
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 // import { Platform } from 'react-native'
 
-import { Explore } from './screens/Explore'
-import { Home } from './screens/Home'
+import { Dashboard } from './screens/Dashboard'
 import { NotFound } from './screens/NotFound'
+import { Watch } from './screens/Watch'
+import { MediaLibrary } from './screens/MediaLibrary'
+import { More } from './screens/More'
 
 import { HapticTab } from '@/components/HapticTab'
-// import { IconSymbol } from '@/components/ui/IconSymbol'
-// import TabBarBackground from '@/components/ui/TabBarBackground'
 import { Colors } from '@/constants/Colors'
 
 import DashboardIcon from '../assets/svgs/dashboardIcon.svg'
@@ -20,28 +20,28 @@ import MoreIcon from '../assets/svgs/moreIcon.svg'
 const HomeTabs = createBottomTabNavigator({
   screens: {
     Dashboard: {
-      screen: Home,
+      screen: Dashboard,
       options: {
         headerShown: false,
         tabBarIcon: ({ color }) => <DashboardIcon width={16} height={16} fill={color} />,
       },
     },
     Watch: {
-      screen: Explore,
+      screen: Watch,
       options: {
         headerShown: false,
         tabBarIcon: ({ color }) => <WatchIcon width={16} height={16} fill={color} />,
       },
     },
     'Media Library': {
-      screen: Explore,
+      screen: MediaLibrary,
       options: {
         headerShown: false,
         tabBarIcon: ({ color }) => <MediaLibraryIcon width={16} height={16} fill={color} />,
       },
     },
     More: {
-      screen: Explore,
+      screen: More,
       options: {
         headerShown: false,
         tabBarIcon: ({ color }) => <MoreIcon width={16} height={16} fill={color} />,
@@ -51,7 +51,6 @@ const HomeTabs = createBottomTabNavigator({
   screenOptions: {
     headerShown: false,
     tabBarButton: HapticTab,
-    // tabBarBackground: TabBarBackground,
     tabBarStyle: {
       backgroundColor: Colors.dark.black,
       paddingTop: 17,

@@ -20,6 +20,11 @@
     "web": {
       "favicon": "src/assets/images/favicon.png"
     },
+    "extra": {
+      "tmdb" : {
+        "apiKey": "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0YjFiNjA3NzNiZGMyMzNkOWQ5YWE1N2U4OGZlNjRjNCIsIm5iZiI6MTc2NDUxNjgyMi41NjMsInN1YiI6IjY5MmM2M2Q2MjJlNGE4ZGNiNzFlYzQ1YiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.9pLqqXX8GS56sxgtkry4TWuxAK8H18qG81SCLTbTBx4"
+      }
+    },
     "plugins": [
       "expo-asset",
       [

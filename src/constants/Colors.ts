@@ -22,7 +22,7 @@ export const Colors = {
   light: {
     ...defaultColors,
     text: '#11181C',
-    background: '#FFFFFF',
+    background: '#F2F2F6',
     card: '#FFFFFF',
     tint: tintColorLight,
     icon: '#827D88',
@@ -32,7 +32,7 @@ export const Colors = {
   dark: {
     ...defaultColors,
     text: '#11181C',
-    background: '#FFFFFF',
+    background: '#F2F2F6',
     card: '#FFFFFF',
     tint: tintColorDark,
     icon: '#827D88',
