@@ -21,7 +21,7 @@ const defaultColors = {
 export const Colors = {
   light: {
     ...defaultColors,
-    text: '#11181C',
+    text: '#202C43',
     background: '#F2F2F6',
     card: '#FFFFFF',
     tint: tintColorLight,
@@ -31,7 +31,7 @@ export const Colors = {
   },
   dark: {
     ...defaultColors,
-    text: '#11181C',
+    text: '#202C43',
     background: '#F2F2F6',
     card: '#FFFFFF',
     tint: tintColorDark,

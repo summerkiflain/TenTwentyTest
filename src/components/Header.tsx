@@ -3,6 +3,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useRoute, useNavigation } from '@react-navigation/native'
 
 import SearchIcon from '../assets/svgs/searchIcon.svg'
+import { Colors } from '@/constants/Colors'
 
 export function Header() {
   const insets = useSafeAreaInsets()
@@ -20,7 +21,7 @@ export function Header() {
             })
           }
         >
-          <SearchIcon width={34} height={34} fill={'#202C43'} />
+          <SearchIcon width={34} height={34} fill={Colors.light.text} />
         </TouchableOpacity>
       </View>
     </View>
@@ -45,6 +46,5 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Regular',
     fontWeight: '500',
     fontSize: 16,
-    lineHeight: 25,
   },
 })

@@ -18,7 +18,12 @@ export function SearchHeader({
     <View style={[styles.mainContainer, { paddingTop: insets.top }]}>
       <View style={styles.headerBar}>
         <View style={styles.searchBar}>
-          <SearchIcon width={34} height={34} fill={'#202C43'} style={{ marginHorizontal: 10 }} />
+          <SearchIcon
+            width={34}
+            height={34}
+            fill={Colors.light.text}
+            style={{ marginHorizontal: 10 }}
+          />
           <TextInput
             value={searchText}
             onChangeText={(text) => {
@@ -40,7 +45,7 @@ export function SearchHeader({
             <CloseIcon
               width={25}
               height={25}
-              fill={searchText ? '#202C43' : Colors.light.tabIconDefault}
+              fill={searchText ? Colors.light.text : Colors.light.tabIconDefault}
               style={{ marginHorizontal: 10 }}
             />
           </TouchableOpacity>
