@@ -20,6 +20,24 @@ import WatchIcon from '../assets/svgs/watchIcon.svg'
 import MediaLibraryIcon from '../assets/svgs/mediaLibraryIcon.svg'
 import MoreIcon from '../assets/svgs/moreIcon.svg'
 
+const SearchStack = createNativeStackNavigator({
+  screens: {
+    Watch: {
+      screen: Watch,
+      options: {
+        headerShown: false,
+      },
+    },
+    Search: {
+      screen: Search,
+      options: {
+        headerShown: false,
+      },
+      params: {} as { data: { genres: any[]; searchResults: any[] } },
+    },
+  },
+})
+
 const HomeTabs = createBottomTabNavigator({
   screens: {
     Dashboard: {
@@ -30,7 +48,7 @@ const HomeTabs = createBottomTabNavigator({
       },
     },
     Watch: {
-      screen: Watch,
+      screen: SearchStack,
       options: {
         headerShown: false,
         tabBarIcon: ({ color }) => <WatchIcon width={16} height={16} fill={color} />,
@@ -78,13 +96,6 @@ const RootStack = createNativeStackNavigator({
       options: {
         headerShown: false,
       },
-    },
-    Search: {
-      screen: Search,
-      options: {
-        headerShown: false,
-      },
-      params: {} as { data: { genres: any[]; searchResults: any[] } },
     },
     Detail: {
       screen: Detail,
