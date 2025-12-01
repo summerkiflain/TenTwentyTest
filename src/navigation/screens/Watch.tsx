@@ -2,7 +2,7 @@ import Constants from 'expo-constants'
 import { StyleSheet, View, Text, ImageBackground, FlatList, TouchableOpacity } from 'react-native'
 import { useCallback, useEffect, useState, useRef } from 'react'
 import { Image } from 'expo-image'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useScrollToTop } from '@react-navigation/native'
 
 import { SearchHeader } from '@/components/SearchHeader'
 import { SCREEN_WIDTH, TMDB_API_ENDPOINT, TMDB_IMAGE_URL } from '@/constants/common'
@@ -23,8 +23,13 @@ export function Watch() {
   const [searchResults, setSearchResults] = useState<any[]>([])
   const [selectedGenre, setSelectedGenre] = useState<GenreItem | undefined>(undefined)
   const backgroundCache = useRef<Record<string, number>>({}).current
+  const searchScrollRef = useRef<FlatList>(null)
+  const genresScrollRef = useRef<FlatList>(null)
   const genreThumbsArray = useRef(Object.values(GenresThumbs)).current
   const navigation = useNavigation()
+
+  useScrollToTop(searchScrollRef)
+  useScrollToTop(genresScrollRef)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -105,6 +110,7 @@ export function Watch() {
       <View style={styles.contentContainer}>
         {searchResults?.length ? (
           <FlatList
+            ref={searchScrollRef}
             contentContainerStyle={styles.searchListContent}
             data={searchResults}
             keyExtractor={(item) => item.id.toString()}
@@ -154,6 +160,7 @@ export function Watch() {
           />
         ) : !searchText ? (
           <FlatList
+            ref={genresScrollRef}
             key={NUMBER_OF_COLUMNS}
             contentContainerStyle={styles.flatListContent}
             data={genres}

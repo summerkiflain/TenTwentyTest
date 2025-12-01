@@ -1,16 +1,19 @@
 import Constants from 'expo-constants'
 import { LinearGradient } from 'expo-linear-gradient'
 import { StyleSheet, View, Text, ImageBackground, FlatList, TouchableOpacity } from 'react-native'
-import { useEffect, useState } from 'react'
-import { useNavigation } from '@react-navigation/native'
+import { useEffect, useState, useRef } from 'react'
+import { useNavigation, useScrollToTop } from '@react-navigation/native'
 
 import { Header } from '@/components/Header'
 import { TMDB_API_ENDPOINT, TMDB_IMAGE_URL } from '@/constants/common'
 import { Colors } from '@/constants/Colors'
 
 export function Dashboard() {
+  const scrollRef = useRef<FlatList>(null)
   const [upcomingMovies, setUpcomingMovies] = useState<any[]>([])
   const navigation = useNavigation()
+
+  useScrollToTop(scrollRef)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,6 +42,7 @@ export function Dashboard() {
 
       <View style={styles.contentContainer}>
         <FlatList
+          ref={scrollRef}
           contentContainerStyle={styles.flatListContent}
           data={upcomingMovies}
           keyExtractor={(item) => item.id.toString()}
