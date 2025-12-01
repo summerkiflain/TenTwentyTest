@@ -7,6 +7,7 @@ import { initialWindowMetrics } from 'react-native-safe-area-context'
 import { Dashboard } from './screens/Dashboard'
 import { NotFound } from './screens/NotFound'
 import { Watch } from './screens/Watch'
+import { Search } from './screens/Search'
 import { MediaLibrary } from './screens/MediaLibrary'
 import { More } from './screens/More'
 
@@ -76,6 +77,13 @@ const RootStack = createNativeStackNavigator({
       options: {
         headerShown: false,
       },
+    },
+    Search: {
+      screen: Search,
+      options: {
+        headerShown: false,
+      },
+      params: {} as { data: { genres: any[]; searchResults: any[] } },
     },
     NotFound: {
       screen: NotFound,

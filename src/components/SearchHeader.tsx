@@ -5,15 +5,21 @@ import { Colors } from '@/constants/Colors'
 
 import SearchIcon from '../assets/svgs/searchIcon.svg'
 import CloseIcon from '../assets/svgs/closeIcon.svg'
+import { useNavigation } from '@react-navigation/native'
 
 export function SearchHeader({
   searchText,
   setSearchText,
+  genres,
+  searchResults,
 }: {
   searchText: string
   setSearchText: (text: string) => void
+  genres: any[]
+  searchResults: any[]
 }) {
   const insets = useSafeAreaInsets()
+  const navigation = useNavigation()
   return (
     <View style={[styles.mainContainer, { paddingTop: insets.top }]}>
       <View style={styles.headerBar}>
@@ -30,12 +36,13 @@ export function SearchHeader({
               setSearchText(text)
             }}
             onSubmitEditing={() => {
-              console.log('submitted')
+              navigation.navigate('Search', { data: { genres, searchResults } })
             }}
             placeholder="TV shows, movies and more"
             style={styles.textInput}
             returnKeyType={'search'}
             autoCapitalize={'sentences'}
+            autoCorrect={false}
           />
           <TouchableOpacity
             onPress={() => {

@@ -4,11 +4,12 @@ import { useCallback, useEffect, useState, useRef } from 'react'
 import { Image } from 'expo-image'
 
 import { SearchHeader } from '@/components/SearchHeader'
-import { TMDB_API_ENDPOINT, TMDB_IMAGE_URL } from '@/constants/common'
+import { SCREEN_WIDTH, TMDB_API_ENDPOINT, TMDB_IMAGE_URL } from '@/constants/common'
 import { GenresThumbs, GenreName } from '@/assets/images/genres'
 import { Colors } from '@/constants/Colors'
 
 import DotsIcon from '../../assets/svgs/dotsIcon.svg'
+const NUMBER_OF_COLUMNS = 2
 
 export function Watch() {
   const [genres, setGenres] = useState<any[]>([])
@@ -58,7 +59,6 @@ export function Watch() {
         const filteredResults = result.results.filter(
           (item: any) => ['movie', 'tv'].includes(item.media_type) && item?.poster_path
         )
-        // console.log('filteredResults:', filteredResults)
         setSearchResults(filteredResults)
       } catch (error) {
         console.error('Error fetching data:', error)
@@ -67,7 +67,6 @@ export function Watch() {
     void fetchData()
   }, [searchText])
 
-  // console.log('@@@ GenresThumbs', GenresThumbs)
   const getGenreBackground = useCallback(
     (genreName: string | GenreName): number => {
       if (backgroundCache[genreName]) {
@@ -86,7 +85,12 @@ export function Watch() {
 
   return (
     <View style={styles.mainContainer}>
-      <SearchHeader searchText={searchText} setSearchText={setSearchText} />
+      <SearchHeader
+        searchText={searchText}
+        setSearchText={setSearchText}
+        genres={genres}
+        searchResults={searchResults}
+      />
 
       <View style={styles.contentContainer}>
         {searchResults?.length ? (
@@ -131,12 +135,17 @@ export function Watch() {
           />
         ) : !searchText ? (
           <FlatList
+            key={NUMBER_OF_COLUMNS}
             contentContainerStyle={styles.flatListContent}
             data={genres}
             keyExtractor={(item) => item.id.toString()}
+            numColumns={NUMBER_OF_COLUMNS}
+            columnWrapperStyle={{ gap: 20 }}
             renderItem={({ item }) => (
               <TouchableOpacity onPress={() => {}} activeOpacity={0.8}>
-                <View style={styles.movieTile}>
+                <View
+                  style={[styles.movieTile, { width: (SCREEN_WIDTH - 60) / NUMBER_OF_COLUMNS }]}
+                >
                   <ImageBackground
                     source={getGenreBackground(item?.name)}
                     style={{ width: '100%', height: '100%' }}
@@ -167,8 +176,6 @@ const styles = StyleSheet.create({
   flatListContent: {
     paddingVertical: 20,
     paddingHorizontal: 20,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
     gap: 20,
   },
   movieTitleContainer: {
@@ -183,8 +190,6 @@ const styles = StyleSheet.create({
   movieTile: {
     borderRadius: 10,
     overflow: 'hidden',
-    position: 'relative',
-    width: 170,
     height: 100,
   },
   movieTitle: {
