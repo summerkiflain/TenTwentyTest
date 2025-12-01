@@ -4,13 +4,14 @@ import { StyleSheet, View, Text, ImageBackground, FlatList, TouchableOpacity } f
 import { useEffect, useState } from 'react'
 
 import { Header } from '@/components/Header'
+import { TMDB_API_ENDPOINT, TMDB_IMAGE_URL } from '@/constants/common'
 
 export function Dashboard() {
   const [upcomingMovies, setUpcomingMovies] = useState<any[]>([])
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://api.themoviedb.org/3/movie/upcoming', {
+        const response = await fetch(`${TMDB_API_ENDPOINT}/movie/upcoming`, {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -41,8 +42,13 @@ export function Dashboard() {
             <TouchableOpacity onPress={() => {}} activeOpacity={0.8}>
               <View style={styles.movieTile}>
                 <ImageBackground
-                  source={{ uri: `https://image.tmdb.org/t/p/w500${item?.poster_path}` }}
-                  style={{ width: '100%', height: 180, position: 'relative' }}
+                  source={{ uri: `${TMDB_IMAGE_URL}/w500${item?.poster_path}` }}
+                  style={{
+                    width: '100%',
+                    height: 180,
+                    position: 'relative',
+                    backgroundColor: '#ffffff',
+                  }}
                 >
                   <LinearGradient
                     colors={['#00000000', '#000000FF']}
