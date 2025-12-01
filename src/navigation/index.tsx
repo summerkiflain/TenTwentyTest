@@ -1,6 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStaticNavigation, StaticParamList } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { initialWindowMetrics } from 'react-native-safe-area-context'
 // import { Platform } from 'react-native'
 
 import { Dashboard } from './screens/Dashboard'
@@ -59,7 +60,7 @@ const HomeTabs = createBottomTabNavigator({
       borderTopRightRadius: 27,
       overflow: 'hidden',
       borderTopWidth: 0,
-      height: 90,
+      height: 75 + (initialWindowMetrics?.insets?.bottom ?? 0),
     },
     tabBarLabelStyle: {
       fontFamily: 'Poppins-Regular',
@@ -94,6 +95,7 @@ type RootStackParamList = StaticParamList<typeof RootStack>
 
 declare global {
   namespace ReactNavigation {
+    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
     interface RootParamList extends RootStackParamList {}
   }
 }
