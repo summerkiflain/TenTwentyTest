@@ -12,10 +12,16 @@ import { Colors } from '@/constants/Colors'
 import DotsIcon from '../../assets/svgs/dotsIcon.svg'
 const NUMBER_OF_COLUMNS = 2
 
+type GenreItem = {
+  id: number
+  name: string
+}
+
 export function Watch() {
   const [genres, setGenres] = useState<any[]>([])
   const [searchText, setSearchText] = useState<string>('')
   const [searchResults, setSearchResults] = useState<any[]>([])
+  const [selectedGenre, setSelectedGenre] = useState<GenreItem | undefined>(undefined)
   const backgroundCache = useRef<Record<string, number>>({}).current
   const genreThumbsArray = useRef(Object.values(GenresThumbs)).current
   const navigation = useNavigation()
@@ -42,22 +48,26 @@ export function Watch() {
   }, [])
 
   useEffect(() => {
-    if (searchText === '') setSearchResults([])
+    if (searchText === '') {
+      setSearchResults([])
+      setSelectedGenre(undefined)
+      return
+    }
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          `${TMDB_API_ENDPOINT}/search/movie?query=${encodeURIComponent(searchText)}`,
-          {
-            method: 'GET',
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${Constants?.expoConfig?.extra?.tmdb?.apiKey}`,
-            },
-          }
-        )
+        const apiEndpoint = selectedGenre
+          ? `${TMDB_API_ENDPOINT}/discover/movie?with_genres=${encodeURIComponent(selectedGenre.id)}`
+          : `${TMDB_API_ENDPOINT}/search/movie?query=${encodeURIComponent(searchText)}`
+        const response = await fetch(apiEndpoint, {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${Constants?.expoConfig?.extra?.tmdb?.apiKey}`,
+          },
+        })
         const result = await response.json()
-        // console.log('Fetched data:', result.results, searchText)
+        // console.log('Fetched data:', result.results.length, searchText, selectedGenre?.name)
         const filteredResults = result.results.filter((item: any) => item?.poster_path)
         setSearchResults(filteredResults)
       } catch (error) {
@@ -65,7 +75,7 @@ export function Watch() {
       }
     }
     void fetchData()
-  }, [searchText])
+  }, [searchText, selectedGenre])
 
   const getGenreBackground = useCallback(
     (genreName: string | GenreName): number => {
@@ -151,7 +161,13 @@ export function Watch() {
             numColumns={NUMBER_OF_COLUMNS}
             columnWrapperStyle={{ gap: 20 }}
             renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => {}} activeOpacity={0.8}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => {
+                  setSelectedGenre(item)
+                  setSearchText(item.name)
+                }}
+              >
                 <View
                   style={[styles.movieTile, { width: (SCREEN_WIDTH - 60) / NUMBER_OF_COLUMNS }]}
                 >

@@ -86,10 +86,6 @@ export function Detail({ route }: { route: { params: { data: any } } }) {
                     <View style={styles.tagsContainer}>
                       {movieDetail?.genres?.map((g: any) => {
                         const genre = genres.find((gen: any) => gen.id === g.id)
-                        {
-                          console.log('@@@ genre', genre)
-                        }
-
                         return genre && genre.name ? (
                           <View
                             key={genre.id}

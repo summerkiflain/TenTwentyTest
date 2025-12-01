@@ -8,7 +8,7 @@ const tintColorDark = '#FFFFFF'
 
 const defaultColors = {
   black: '#2E2739',
-  white: '#F6F6FA',
+  white: '#FFFFFF',
   darkGray: '#827D88',
   lightBlue: '#61C3F2',
   gray: '#DBDBDF',

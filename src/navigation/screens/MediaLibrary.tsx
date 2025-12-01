@@ -1,14 +1,15 @@
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, Text } from 'react-native'
 
 import { Header } from '@/components/Header'
-import { Colors } from '@/constants/Colors'
 
 export function MediaLibrary() {
   return (
     <View style={styles.mainContainer}>
       <Header />
 
-      <View style={styles.contentContainer}></View>
+      <View style={styles.contentContainer}>
+        <Text>Nothing here yet.</Text>
+      </View>
     </View>
   )
 }
@@ -19,31 +20,6 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-  },
-  flatListContent: {
-    // flex: 1,
-    paddingTop: 20,
-    paddingHorizontal: 20,
-  },
-  movieTitleContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    justifyContent: 'center',
-    height: 70,
-    paddingHorizontal: 20,
-  },
-  movieTile: {
-    borderRadius: 10,
-    overflow: 'hidden',
-    marginBottom: 20,
-  },
-  movieTitle: {
-    fontFamily: 'PoppinsRegular',
-    fontWeight: 500,
-    fontSize: 18,
-    lineHeight: 22,
-    color: Colors.light.white,
+    padding: 20,
   },
 })
