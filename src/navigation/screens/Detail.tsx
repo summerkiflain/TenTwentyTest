@@ -39,27 +39,31 @@ export function Detail({ route }: { route: { params: { data: any } } }) {
 
   return (
     <View style={styles.mainContainer}>
-      <BackHeader searchResults={[]} background={'transparent'} />
+      <BackHeader searchResults={[]} background={'transparent'} label={'Watch'} />
 
       <View style={styles.contentContainer}>
-        <View style={styles.movieTile}>
-          <ImageBackground
-            source={{ uri: `${TMDB_IMAGE_URL}/original${game?.poster_path}` }}
-            style={{
-              width: '100%',
-              height: 450,
-              position: 'relative',
-              backgroundColor: '#ffffff',
-            }}
-          >
-            <LinearGradient colors={['#00000000', '#000000FF']} style={styles.movieTitleContainer}>
-              <Text style={styles.movieTitle} numberOfLines={2}>
-                {game?.title}
-              </Text>
-            </LinearGradient>
-          </ImageBackground>
-        </View>
-        <ScrollView></ScrollView>
+        <ScrollView bounces={false}>
+          <View style={styles.movieTile}>
+            <ImageBackground
+              source={{ uri: `${TMDB_IMAGE_URL}/original${game?.poster_path}` }}
+              style={{
+                width: '100%',
+                height: 450,
+                position: 'relative',
+                backgroundColor: '#ffffff',
+              }}
+            >
+              <LinearGradient
+                colors={['#00000000', '#000000FF']}
+                style={styles.movieTitleContainer}
+              >
+                <Text style={styles.movieTitle} numberOfLines={2}>
+                  {game?.title}
+                </Text>
+              </LinearGradient>
+            </ImageBackground>
+          </View>
+        </ScrollView>
       </View>
     </View>
   )

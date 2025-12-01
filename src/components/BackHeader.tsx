@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Platform } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useNavigation } from '@react-navigation/native'
 import { HeaderBackButton } from '@react-navigation/elements'
@@ -6,11 +6,11 @@ import { HeaderBackButton } from '@react-navigation/elements'
 import { Colors } from '@/constants/Colors'
 
 export function BackHeader({
-  searchResults,
   background = Colors.light.white,
+  label,
 }: {
-  searchResults: any[]
   background: string
+  label: string
 }) {
   const insets = useSafeAreaInsets()
   const navigation = useNavigation()
@@ -31,7 +31,7 @@ export function BackHeader({
             { color: background === 'transparent' ? Colors.light.white : Colors.light.text },
           ]}
         >
-          {`${searchResults?.length > 0 ? searchResults.length : 'No'} Results Found`}
+          {label}
         </Text>
       </View>
     </View>

@@ -13,9 +13,10 @@ export function Search({ route }: { route: { params: { data: any } } }) {
   const {
     data: { searchResults, genres },
   } = route.params
+  const label = `${searchResults?.length > 0 ? searchResults.length : 'No'} Results Found`
   return (
     <View style={styles.mainContainer}>
-      <BackHeader searchResults={searchResults} background={Colors.light.white} />
+      <BackHeader background={Colors.light.white} label={label} />
 
       <View style={styles.contentContainer}>
         {searchResults?.length ? (
