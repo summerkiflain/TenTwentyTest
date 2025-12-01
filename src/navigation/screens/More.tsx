@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 
 import { Header } from '@/components/Header'
+import { Colors } from '@/constants/Colors'
 
 export function More() {
   return (
@@ -8,7 +9,7 @@ export function More() {
       <Header />
 
       <View style={styles.contentContainer}>
-        <Text>Nothing here yet.</Text>
+        <Text style={styles.text}>Nothing here yet.</Text>
       </View>
     </View>
   )
@@ -21,5 +22,9 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     padding: 20,
+  },
+  text: {
+    fontFamily: 'PoppinsRegular',
+    color: Colors.light.text,
   },
 })
