@@ -1,5 +1,6 @@
 import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native'
 import { Image } from 'expo-image'
+import { useNavigation } from '@react-navigation/native'
 
 import { BackHeader } from '@/components/BackHeader'
 import { TMDB_IMAGE_URL } from '@/constants/common'
@@ -8,12 +9,14 @@ import { Colors } from '@/constants/Colors'
 import DotsIcon from '../../assets/svgs/dotsIcon.svg'
 
 export function Search({ route }: { route: { params: { data: any } } }) {
+  const navigation = useNavigation()
   const {
     data: { searchResults, genres },
   } = route.params
   return (
     <View style={styles.mainContainer}>
-      <BackHeader searchResults={searchResults} />
+      <BackHeader searchResults={searchResults} background={Colors.light.white} />
+
       <View style={styles.contentContainer}>
         {searchResults?.length ? (
           <FlatList
@@ -21,7 +24,16 @@ export function Search({ route }: { route: { params: { data: any } } }) {
             data={searchResults}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => {}} activeOpacity={0.8}>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('Detail', {
+                    data: {
+                      game: item,
+                    },
+                  })
+                }
+                activeOpacity={0.8}
+              >
                 <View style={styles.movieContainer}>
                   <Image
                     source={{ uri: `${TMDB_IMAGE_URL}/w500${item?.poster_path}` }}

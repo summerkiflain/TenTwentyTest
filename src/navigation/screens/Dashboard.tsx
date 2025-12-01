@@ -2,12 +2,15 @@ import Constants from 'expo-constants'
 import { LinearGradient } from 'expo-linear-gradient'
 import { StyleSheet, View, Text, ImageBackground, FlatList, TouchableOpacity } from 'react-native'
 import { useEffect, useState } from 'react'
+import { useNavigation } from '@react-navigation/native'
 
 import { Header } from '@/components/Header'
 import { TMDB_API_ENDPOINT, TMDB_IMAGE_URL } from '@/constants/common'
 
 export function Dashboard() {
   const [upcomingMovies, setUpcomingMovies] = useState<any[]>([])
+  const navigation = useNavigation()
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -39,7 +42,16 @@ export function Dashboard() {
           data={upcomingMovies}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => {}} activeOpacity={0.8}>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('Detail', {
+                  data: {
+                    game: item,
+                  },
+                })
+              }
+              activeOpacity={0.8}
+            >
               <View style={styles.movieTile}>
                 <ImageBackground
                   source={{ uri: `${TMDB_IMAGE_URL}/w500${item?.poster_path}` }}

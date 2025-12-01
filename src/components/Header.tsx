@@ -30,7 +30,6 @@ export function Header() {
 
 const styles = StyleSheet.create({
   mainContainer: {
-    height: 120,
     backgroundColor: '#FFFFFF',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -41,6 +40,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 20,
     alignItems: 'center',
+    paddingVertical: 15,
   },
   headerTitle: {
     fontFamily: 'Poppins-Regular',

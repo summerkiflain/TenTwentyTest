@@ -1,23 +1,36 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Platform } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useNavigation } from '@react-navigation/native'
 import { HeaderBackButton } from '@react-navigation/elements'
 
 import { Colors } from '@/constants/Colors'
 
-export function BackHeader({ searchResults }: { searchResults: any[] }) {
+export function BackHeader({
+  searchResults,
+  background = Colors.light.white,
+}: {
+  searchResults: any[]
+  background: string
+}) {
   const insets = useSafeAreaInsets()
   const navigation = useNavigation()
+  const mainContainerStyling =
+    background === 'transparent' ? styles.mainContainerAbsolute : styles.mainContainer
   return (
-    <View style={[styles.mainContainer, { paddingTop: insets.top }]}>
+    <View style={[mainContainerStyling, { paddingTop: insets.top }]}>
       <View style={styles.headerBar}>
         <HeaderBackButton
           displayMode={'minimal'}
-          tintColor={Colors.light.text}
+          tintColor={background === 'transparent' ? Colors.light.white : Colors.light.text}
           onPress={() => navigation.goBack()}
           style={styles.backButton}
         />
-        <Text style={styles.headerTitle}>
+        <Text
+          style={[
+            styles.headerTitle,
+            { color: background === 'transparent' ? Colors.light.white : Colors.light.text },
+          ]}
+        >
           {`${searchResults?.length > 0 ? searchResults.length : 'No'} Results Found`}
         </Text>
       </View>
@@ -27,16 +40,25 @@ export function BackHeader({ searchResults }: { searchResults: any[] }) {
 
 const styles = StyleSheet.create({
   mainContainer: {
-    height: 120,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.light.white,
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  mainContainerAbsolute: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: 'transparent',
+    position: 'absolute',
+    top: 0,
+    width: '100%',
+    zIndex: 1,
   },
   headerBar: {
     flex: 1,
     flexDirection: 'row',
     paddingHorizontal: 20,
     alignItems: 'center',
+    paddingVertical: 15,
   },
   headerTitle: {
     fontFamily: 'Poppins-Regular',

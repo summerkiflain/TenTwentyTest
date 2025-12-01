@@ -21,7 +21,7 @@ export function SearchHeader({
   const insets = useSafeAreaInsets()
   const navigation = useNavigation()
   return (
-    <View style={[styles.mainContainer, { paddingTop: insets.top }]}>
+    <View style={[styles.mainContainer, { paddingTop: insets.top + 10 }]}>
       <View style={styles.headerBar}>
         <View style={styles.searchBar}>
           <SearchIcon
@@ -64,7 +64,6 @@ export function SearchHeader({
 
 const styles = StyleSheet.create({
   mainContainer: {
-    height: 140,
     backgroundColor: '#FFFFFF',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -75,6 +74,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 20,
     alignItems: 'center',
+    paddingBottom: 20,
   },
   searchBar: {
     backgroundColor: Colors.light.background,
@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   textInput: {
+    fontFamily: 'Poppins-Regular',
     flex: 1,
     height: 50,
   },

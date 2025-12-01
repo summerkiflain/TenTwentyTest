@@ -3,7 +3,7 @@ import { DarkTheme, DefaultTheme } from '@react-navigation/native'
 import { useFonts } from 'expo-font'
 import * as SplashScreen from 'expo-splash-screen'
 import * as React from 'react'
-import { useColorScheme } from 'react-native'
+import { StatusBar, useColorScheme } from 'react-native'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 import { Colors } from './constants/Colors'
@@ -61,6 +61,7 @@ export function App() {
 
   return (
     <SafeAreaProvider>
+      <StatusBar barStyle="dark-content" />
       <Navigation
         theme={theme}
         linking={{

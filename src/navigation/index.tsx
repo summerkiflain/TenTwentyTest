@@ -8,6 +8,7 @@ import { Dashboard } from './screens/Dashboard'
 import { NotFound } from './screens/NotFound'
 import { Watch } from './screens/Watch'
 import { Search } from './screens/Search'
+import { Detail } from './screens/Detail'
 import { MediaLibrary } from './screens/MediaLibrary'
 import { More } from './screens/More'
 
@@ -84,6 +85,13 @@ const RootStack = createNativeStackNavigator({
         headerShown: false,
       },
       params: {} as { data: { genres: any[]; searchResults: any[] } },
+    },
+    Detail: {
+      screen: Detail,
+      options: {
+        headerShown: false,
+      },
+      params: {} as { data: { game: any[] } },
     },
     NotFound: {
       screen: NotFound,

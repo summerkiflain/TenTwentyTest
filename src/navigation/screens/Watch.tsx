@@ -2,6 +2,7 @@ import Constants from 'expo-constants'
 import { StyleSheet, View, Text, ImageBackground, FlatList, TouchableOpacity } from 'react-native'
 import { useCallback, useEffect, useState, useRef } from 'react'
 import { Image } from 'expo-image'
+import { useNavigation } from '@react-navigation/native'
 
 import { SearchHeader } from '@/components/SearchHeader'
 import { SCREEN_WIDTH, TMDB_API_ENDPOINT, TMDB_IMAGE_URL } from '@/constants/common'
@@ -17,6 +18,7 @@ export function Watch() {
   const [searchResults, setSearchResults] = useState<any[]>([])
   const backgroundCache = useRef<Record<string, number>>({}).current
   const genreThumbsArray = useRef(Object.values(GenresThumbs)).current
+  const navigation = useNavigation()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -99,7 +101,16 @@ export function Watch() {
             data={searchResults}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => {}} activeOpacity={0.8}>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('Detail', {
+                    data: {
+                      game: item,
+                    },
+                  })
+                }
+                activeOpacity={0.8}
+              >
                 <View style={styles.movieContainer}>
                   <Image
                     source={{ uri: `${TMDB_IMAGE_URL}/w500${item?.poster_path}` }}
