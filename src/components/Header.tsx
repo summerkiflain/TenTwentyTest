@@ -30,7 +30,7 @@ export function Header() {
 
 const styles = StyleSheet.create({
   mainContainer: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.light.white,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   headerTitle: {
-    fontFamily: 'Poppins-Regular',
+    fontFamily: 'PoppinsRegular',
     fontWeight: '500',
     fontSize: 16,
   },

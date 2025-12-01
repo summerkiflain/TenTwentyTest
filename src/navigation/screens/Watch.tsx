@@ -46,7 +46,7 @@ export function Watch() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${TMDB_API_ENDPOINT}/search/multi?query=${encodeURIComponent(searchText)}`,
+          `${TMDB_API_ENDPOINT}/search/movie?query=${encodeURIComponent(searchText)}`,
           {
             method: 'GET',
             headers: {
@@ -58,9 +58,7 @@ export function Watch() {
         )
         const result = await response.json()
         // console.log('Fetched data:', result.results, searchText)
-        const filteredResults = result.results.filter(
-          (item: any) => ['movie', 'tv'].includes(item.media_type) && item?.poster_path
-        )
+        const filteredResults = result.results.filter((item: any) => item?.poster_path)
         setSearchResults(filteredResults)
       } catch (error) {
         console.error('Error fetching data:', error)
@@ -105,7 +103,7 @@ export function Watch() {
                 onPress={() =>
                   navigation.navigate('Detail', {
                     data: {
-                      game: item,
+                      movie: item,
                     },
                   })
                 }
@@ -204,11 +202,11 @@ const styles = StyleSheet.create({
     height: 100,
   },
   movieTitle: {
-    fontFamily: 'Poppins-Regular',
+    fontFamily: 'PoppinsRegular',
     fontWeight: 500,
     fontSize: 16,
     lineHeight: 20,
-    color: '#FFFFFF',
+    color: Colors.light.white,
   },
   searchResultHeader: {
     borderBottomWidth: 1,
@@ -235,13 +233,13 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.white,
   },
   searchMovieTitle: {
-    fontFamily: 'Poppins-Regular',
+    fontFamily: 'PoppinsRegular',
     fontWeight: 500,
     fontSize: 15,
     color: Colors.light.text,
   },
   searchMovieGenre: {
-    fontFamily: 'Poppins-Regular',
+    fontFamily: 'PoppinsRegular',
     fontWeight: 500,
     fontSize: 12,
     color: Colors.light.gray,

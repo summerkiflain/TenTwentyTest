@@ -29,7 +29,7 @@ export function Search({ route }: { route: { params: { data: any } } }) {
                 onPress={() =>
                   navigation.navigate('Detail', {
                     data: {
-                      game: item,
+                      movie: item,
                     },
                   })
                 }
@@ -100,11 +100,11 @@ const styles = StyleSheet.create({
     height: 100,
   },
   movieTitle: {
-    fontFamily: 'Poppins-Regular',
+    fontFamily: 'PoppinsRegular',
     fontWeight: 500,
     fontSize: 16,
     lineHeight: 20,
-    color: '#FFFFFF',
+    color: Colors.light.white,
   },
   searchResultHeader: {
     borderBottomWidth: 1,
@@ -131,13 +131,13 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.white,
   },
   searchMovieTitle: {
-    fontFamily: 'Poppins-Regular',
+    fontFamily: 'PoppinsRegular',
     fontWeight: 500,
     fontSize: 15,
     color: Colors.light.text,
   },
   searchMovieGenre: {
-    fontFamily: 'Poppins-Regular',
+    fontFamily: 'PoppinsRegular',
     fontWeight: 500,
     fontSize: 12,
     color: Colors.light.gray,

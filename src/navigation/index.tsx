@@ -65,7 +65,7 @@ const HomeTabs = createBottomTabNavigator({
       height: 75 + (initialWindowMetrics?.insets?.bottom ?? 0),
     },
     tabBarLabelStyle: {
-      fontFamily: 'Poppins-Regular',
+      fontFamily: 'PoppinsRegular',
       fontSize: 10,
     },
   },
@@ -91,7 +91,7 @@ const RootStack = createNativeStackNavigator({
       options: {
         headerShown: false,
       },
-      params: {} as { data: { game: any[] } },
+      params: {} as { data: { movie: any[] } },
     },
     NotFound: {
       screen: NotFound,

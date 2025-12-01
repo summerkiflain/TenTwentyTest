@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native'
 
 import { Header } from '@/components/Header'
 import { TMDB_API_ENDPOINT, TMDB_IMAGE_URL } from '@/constants/common'
+import { Colors } from '@/constants/Colors'
 
 export function Dashboard() {
   const [upcomingMovies, setUpcomingMovies] = useState<any[]>([])
@@ -46,7 +47,7 @@ export function Dashboard() {
               onPress={() =>
                 navigation.navigate('Detail', {
                   data: {
-                    game: item,
+                    movie: item,
                   },
                 })
               }
@@ -54,12 +55,12 @@ export function Dashboard() {
             >
               <View style={styles.movieTile}>
                 <ImageBackground
-                  source={{ uri: `${TMDB_IMAGE_URL}/w500${item?.poster_path}` }}
+                  source={{ uri: `${TMDB_IMAGE_URL}/w500${item?.backdrop_path}` }}
                   style={{
                     width: '100%',
                     height: 180,
                     position: 'relative',
-                    backgroundColor: '#ffffff',
+                    backgroundColor: Colors.light.white,
                   }}
                 >
                   <LinearGradient
@@ -107,10 +108,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   movieTitle: {
-    fontFamily: 'Poppins-Regular',
+    fontFamily: 'PoppinsRegular',
     fontWeight: 500,
     fontSize: 18,
     lineHeight: 22,
-    color: '#FFFFFF',
+    color: Colors.light.white,
   },
 })

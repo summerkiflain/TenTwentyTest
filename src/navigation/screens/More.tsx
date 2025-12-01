@@ -1,6 +1,7 @@
 import { StyleSheet, View } from 'react-native'
 
 import { Header } from '@/components/Header'
+import { Colors } from '@/constants/Colors'
 
 export function More() {
   return (
@@ -39,10 +40,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   movieTitle: {
-    fontFamily: 'Poppins-Regular',
+    fontFamily: 'PoppinsRegular',
     fontWeight: 500,
     fontSize: 18,
     lineHeight: 22,
-    color: '#FFFFFF',
+    color: Colors.light.white,
   },
 })

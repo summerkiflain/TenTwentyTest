@@ -64,7 +64,7 @@ export function SearchHeader({
 
 const styles = StyleSheet.create({
   mainContainer: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.light.white,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   textInput: {
-    fontFamily: 'Poppins-Regular',
+    fontFamily: 'PoppinsRegular',
     flex: 1,
     height: 50,
   },

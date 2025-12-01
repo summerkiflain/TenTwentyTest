@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   headerTitle: {
-    fontFamily: 'Poppins-Regular',
+    fontFamily: 'PoppinsRegular',
     fontWeight: '500',
     fontSize: 16,
   },
