@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     alignItems: 'center',
     gap: 10,
-    // maxWidth: 170,
+    minWidth: 170,
   },
   buttonText: {
     fontFamily: 'PoppinsBold',

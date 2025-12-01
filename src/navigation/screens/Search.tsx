@@ -95,7 +95,6 @@ const styles = StyleSheet.create({
   movieTile: {
     borderRadius: 10,
     overflow: 'hidden',
-    position: 'relative',
     width: 170,
     height: 100,
   },

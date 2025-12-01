@@ -1,7 +1,16 @@
 import { LinearGradient } from 'expo-linear-gradient'
 import moment from 'moment'
 import { useState, useEffect } from 'react'
-import { StyleSheet, View, Text, ImageBackground, ScrollView, StatusBar } from 'react-native'
+import {
+  StyleSheet,
+  View,
+  Text,
+  ImageBackground,
+  ScrollView,
+  StatusBar,
+  useWindowDimensions,
+} from 'react-native'
+import * as ScreenOrientation from 'expo-screen-orientation'
 // import { useNavigation } from '@react-navigation/native'
 
 import { BackHeader } from '@/components/BackHeader'
@@ -18,9 +27,18 @@ export function Detail({ route }: { route: { params: { data: any } } }) {
   const {
     data: { movie },
   } = route.params
-
+  const { width, height } = useWindowDimensions()
+  const isLandscape = width > height
   const [movieDetail, setMovieDetail] = useState<any>(movie)
   // const navigation = useNavigation()
+
+  useEffect(() => {
+    void ScreenOrientation.unlockAsync()
+
+    return () => {
+      void ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP)
+    }
+  }, [])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,15 +66,19 @@ export function Detail({ route }: { route: { params: { data: any } } }) {
       <StatusBar barStyle="light-content" />
       <BackHeader background={'transparent'} label={'Watch'} />
 
-      <View style={styles.contentContainer}>
-        <ScrollView bounces={false}>
-          <View style={styles.movieTile}>
+      <ScrollView bounces={false} automaticallyAdjustContentInsets={false}>
+        <View style={[styles.movieTile, { flexDirection: isLandscape ? 'row' : 'column' }]}>
+          <View
+            style={[
+              styles.startSection,
+              { width: isLandscape ? '50%' : '100%', height: isLandscape ? height : 'auto' },
+            ]}
+          >
             <ImageBackground
               source={{ uri: `${TMDB_IMAGE_URL}/original${movieDetail?.poster_path}` }}
               style={{
                 width: '100%',
-                height: 450,
-                position: 'relative',
+                height: isLandscape ? '100%' : 450,
                 backgroundColor: Colors.light.white,
               }}
             >
@@ -64,48 +86,57 @@ export function Detail({ route }: { route: { params: { data: any } } }) {
                 colors={['#00000000', '#000000FF']}
                 style={styles.movieTitleContainer}
               >
-                <View style={styles.infoContainer}>
+                <View style={[styles.infoContainer, { width: isLandscape ? '95%' : '80%' }]}>
                   <Text style={styles.movieTitle} numberOfLines={2}>
                     {movieDetail?.title}
                   </Text>
                   <Text style={styles.movieSubTitle} numberOfLines={1}>
                     In Theaters {moment(movieDetail?.release_date).format('MMM D, YYYY')}
                   </Text>
-                  <View style={styles.buttonsContainer}>
-                    <Button title={'Get Tickets'} backgroundColor={Colors.light.lightBlue} block />
-                    <Button title={'Watch Trailer'} icon={PlayIcon} block />
+                  <View
+                    style={[
+                      styles.buttonsContainer,
+                      { flexDirection: isLandscape ? 'row' : 'column' },
+                    ]}
+                  >
+                    <Button
+                      title={'Get Tickets'}
+                      backgroundColor={Colors.light.lightBlue}
+                      block={!isLandscape}
+                    />
+                    <Button title={'Watch Trailer'} icon={PlayIcon} block={!isLandscape} />
                   </View>
                 </View>
               </LinearGradient>
             </ImageBackground>
-            <View style={styles.movieContent}>
-              {movieDetail?.genres?.length ? (
-                <>
-                  <Text style={styles.heading}>Genres</Text>
-                  <View style={styles.genresContainer}>
-                    <View style={styles.tagsContainer}>
-                      {movieDetail?.genres?.map((g: any) => {
-                        const genre = genres.find((gen: any) => gen.id === g.id)
-                        return genre && genre.name ? (
-                          <View
-                            key={genre.id}
-                            style={[styles.genreTag, { backgroundColor: genre.color }]}
-                          >
-                            <Text style={styles.genreTagTitle}>{genre.name}</Text>
-                          </View>
-                        ) : null
-                      })}
-                    </View>
-                  </View>
-                  <View style={styles.separator} />
-                </>
-              ) : null}
-              <Text style={styles.heading}>Overview</Text>
-              <Text style={styles.overview}>{movieDetail?.overview}</Text>
-            </View>
           </View>
-        </ScrollView>
-      </View>
+          <View style={styles.movieContent}>
+            {movieDetail?.genres?.length ? (
+              <>
+                <Text style={styles.heading}>Genres</Text>
+                <View style={styles.genresContainer}>
+                  <View style={styles.tagsContainer}>
+                    {movieDetail?.genres?.map((g: any) => {
+                      const genre = genres.find((gen: any) => gen.id === g.id)
+                      return genre && genre.name ? (
+                        <View
+                          key={genre.id}
+                          style={[styles.genreTag, { backgroundColor: genre.color }]}
+                        >
+                          <Text style={styles.genreTagTitle}>{genre.name}</Text>
+                        </View>
+                      ) : null
+                    })}
+                  </View>
+                </View>
+                <View style={styles.separator} />
+              </>
+            ) : null}
+            <Text style={styles.heading}>Overview</Text>
+            <Text style={styles.overview}>{movieDetail?.overview}</Text>
+          </View>
+        </View>
+      </ScrollView>
     </View>
   )
 }
@@ -114,11 +145,7 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
   },
-  contentContainer: {
-    flex: 1,
-  },
   flatListContent: {
-    // flex: 1,
     paddingTop: 20,
     paddingHorizontal: 20,
   },
@@ -130,10 +157,10 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     height: 360,
     paddingHorizontal: 20,
+    maxHeight: '100%',
   },
   movieTile: {
     overflow: 'hidden',
-    marginBottom: 20,
   },
   infoContainer: {
     width: '80%',
@@ -165,6 +192,7 @@ const styles = StyleSheet.create({
   movieContent: {
     paddingVertical: 10,
     paddingHorizontal: 40,
+    flexShrink: 1,
   },
   heading: {
     fontFamily: 'PoppinsRegular',
@@ -201,5 +229,8 @@ const styles = StyleSheet.create({
     fontWeight: 600,
     color: Colors.light.white,
     fontSize: 12,
+  },
+  startSection: {
+    width: '100%',
   },
 })

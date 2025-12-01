@@ -59,7 +59,6 @@ export function Dashboard() {
                   style={{
                     width: '100%',
                     height: 180,
-                    position: 'relative',
                     backgroundColor: Colors.light.white,
                   }}
                 >
