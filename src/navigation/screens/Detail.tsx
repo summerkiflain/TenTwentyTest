@@ -34,6 +34,7 @@ export function Detail({ route }: { route: { params: { data: any } } }) {
   const isLandscape = width > height
   const [movieDetail, setMovieDetail] = useState<any>(movie)
   const [showTrailer, setShowTrailer] = useState<string | undefined>(undefined)
+  const [play, setPlay] = useState(false)
   const navigation = useNavigation()
 
   useEffect(() => {
@@ -197,18 +198,27 @@ export function Detail({ route }: { route: { params: { data: any } } }) {
         <StatusBar hidden />
         <View style={styles.modalContainer}>
           <TouchableOpacity
-            onPress={() => setShowTrailer(undefined)}
+            onPress={() => {
+              setShowTrailer(undefined)
+              setPlay(false)
+            }}
             style={styles.modalCloseButton}
           >
-            <Text style={styles.closeText}>Close</Text>
+            <Text style={styles.closeText}>Done</Text>
           </TouchableOpacity>
           <SafeAreaView>
             <YoutubePlayer
               height={300}
-              play={true}
+              play={play}
               videoId={showTrailer}
               onChangeState={(state: string) => {
-                if (state === 'ended') setShowTrailer(undefined)
+                if (state === 'ended') {
+                  setShowTrailer(undefined)
+                  setPlay(false)
+                }
+              }}
+              onReady={() => {
+                setPlay(true)
               }}
             />
           </SafeAreaView>
