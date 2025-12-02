@@ -49,9 +49,12 @@ export function Dashboard() {
           renderItem={({ item }) => (
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate('Detail', {
-                  data: {
-                    movie: item,
+                navigation.navigate('DetailStack', {
+                  screen: 'Detail',
+                  params: {
+                    data: {
+                      movie: item,
+                    },
                   },
                 })
               }

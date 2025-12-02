@@ -75,6 +75,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     alignItems: 'center',
     paddingBottom: 20,
+    borderBottomWidth: 1,
+    borderColor: '#EFEFEF',
   },
   searchBar: {
     backgroundColor: Colors.light.background,

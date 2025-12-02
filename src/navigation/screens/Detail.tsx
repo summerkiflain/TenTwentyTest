@@ -24,7 +24,6 @@ import { Colors } from '@/constants/Colors'
 
 import PlayIcon from '@/assets/svgs/playIcon.svg'
 import Constants from 'expo-constants'
-import * as React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 export function Detail({ route }: { route: { params: { data: any } } }) {
@@ -135,6 +134,16 @@ export function Detail({ route }: { route: { params: { data: any } } }) {
                       title={'Get Tickets'}
                       backgroundColor={Colors.light.lightBlue}
                       block={!isLandscape}
+                      onPress={() => {
+                        navigation.navigate('DetailStack', {
+                          screen: 'Halls',
+                          params: {
+                            data: {
+                              movie: movieDetail,
+                            },
+                          },
+                        })
+                      }}
                     />
                     <Button
                       title={'Watch Trailer'}

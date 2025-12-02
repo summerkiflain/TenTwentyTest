@@ -27,9 +27,12 @@ export function Search({ route }: { route: { params: { data: any } } }) {
             renderItem={({ item }) => (
               <TouchableOpacity
                 onPress={() =>
-                  navigation.navigate('Detail', {
-                    data: {
-                      movie: item,
+                  navigation.navigate('DetailStack', {
+                    screen: 'Detail',
+                    params: {
+                      data: {
+                        movie: item,
+                      },
                     },
                   })
                 }

@@ -8,6 +8,8 @@ import { Dashboard } from './screens/Dashboard'
 import { NotFound } from './screens/NotFound'
 import { Watch } from './screens/Watch'
 import { Search } from './screens/Search'
+import { Halls } from './screens/Halls'
+import { Seats } from './screens/Seats'
 import { Detail } from './screens/Detail'
 import { MediaLibrary } from './screens/MediaLibrary'
 import { More } from './screens/More'
@@ -89,6 +91,31 @@ const HomeTabs = createBottomTabNavigator({
   },
 })
 
+const DetailStack = createNativeStackNavigator({
+  screens: {
+    Detail: {
+      screen: Detail,
+      options: {
+        headerShown: false,
+      },
+      params: {} as { data: { movie: any[] } },
+    },
+    Halls: {
+      screen: Halls,
+      options: {
+        headerShown: false,
+      },
+    },
+    Seats: {
+      screen: Seats,
+      options: {
+        headerShown: false,
+      },
+      params: {} as { data: { movie: any[] } },
+    },
+  },
+})
+
 const RootStack = createNativeStackNavigator({
   screens: {
     HomeTabs: {
@@ -97,8 +124,8 @@ const RootStack = createNativeStackNavigator({
         headerShown: false,
       },
     },
-    Detail: {
-      screen: Detail,
+    DetailStack: {
+      screen: DetailStack,
       options: {
         headerShown: false,
       },

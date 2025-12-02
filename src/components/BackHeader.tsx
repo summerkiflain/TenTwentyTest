@@ -10,7 +10,7 @@ export function BackHeader({
   label,
 }: {
   background: string
-  label: string
+  label?: string
 }) {
   const insets = useSafeAreaInsets()
   const navigation = useNavigation()

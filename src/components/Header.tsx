@@ -41,6 +41,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     alignItems: 'center',
     paddingVertical: 15,
+    borderBottomWidth: 1,
+    borderColor: '#EFEFEF',
   },
   headerTitle: {
     fontFamily: 'PoppinsRegular',
