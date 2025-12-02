@@ -9,9 +9,12 @@ import {
   ScrollView,
   StatusBar,
   useWindowDimensions,
+  Modal,
+  TouchableOpacity,
 } from 'react-native'
 import * as ScreenOrientation from 'expo-screen-orientation'
-// import { useNavigation } from '@react-navigation/native'
+import YoutubePlayer from 'react-native-youtube-iframe'
+import { useNavigation } from '@react-navigation/native'
 
 import { BackHeader } from '@/components/BackHeader'
 import { Button } from '@/components/Button'
@@ -22,6 +25,7 @@ import { Colors } from '@/constants/Colors'
 import PlayIcon from '@/assets/svgs/playIcon.svg'
 import Constants from 'expo-constants'
 import * as React from 'react'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 export function Detail({ route }: { route: { params: { data: any } } }) {
   const {
@@ -30,15 +34,23 @@ export function Detail({ route }: { route: { params: { data: any } } }) {
   const { width, height } = useWindowDimensions()
   const isLandscape = width > height
   const [movieDetail, setMovieDetail] = useState<any>(movie)
-  // const navigation = useNavigation()
+  const [showTrailer, setShowTrailer] = useState<string | undefined>(undefined)
+  const navigation = useNavigation()
 
   useEffect(() => {
-    void ScreenOrientation.unlockAsync()
+    const transition = navigation.addListener('transitionEnd' as never, (e: any) => {
+      if (!e.data.closing) ScreenOrientation.unlockAsync()
+    })
+
+    const orientation = navigation.addListener('beforeRemove', () => {
+      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP)
+    })
 
     return () => {
-      void ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP)
+      transition()
+      orientation()
     }
-  }, [])
+  }, [navigation])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,6 +66,26 @@ export function Detail({ route }: { route: { params: { data: any } } }) {
         const result = await response.json()
         // console.log('Fetched data:', result)
         setMovieDetail(result)
+        const videos = await fetch(`${TMDB_API_ENDPOINT}/movie/${movie.id}/videos`, {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${Constants?.expoConfig?.extra?.tmdb?.apiKey}`,
+          },
+        })
+        const videosResponse = await videos.json()
+        const trailers = videosResponse?.results.filter(
+          (video: { type: string; site: string }) =>
+            video.type === 'Trailer' && video.site === 'YouTube'
+        )
+        // console.log('Fetched data:', trailers)
+        if (trailers?.length) {
+          setMovieDetail({
+            ...result,
+            trailers,
+          })
+        }
       } catch (error) {
         console.error('Error fetching data:', error)
       }
@@ -104,7 +136,17 @@ export function Detail({ route }: { route: { params: { data: any } } }) {
                       backgroundColor={Colors.light.lightBlue}
                       block={!isLandscape}
                     />
-                    <Button title={'Watch Trailer'} icon={PlayIcon} block={!isLandscape} />
+                    <Button
+                      title={'Watch Trailer'}
+                      icon={PlayIcon}
+                      block={!isLandscape}
+                      onPress={() => {
+                        if (movieDetail?.trailers?.length) {
+                          setShowTrailer(movieDetail.trailers[0].key)
+                        }
+                      }}
+                      disabled={!movieDetail?.trailers?.length}
+                    />
                   </View>
                 </View>
               </LinearGradient>
@@ -137,6 +179,32 @@ export function Detail({ route }: { route: { params: { data: any } } }) {
           </View>
         </View>
       </ScrollView>
+      <Modal
+        visible={!!showTrailer}
+        animationType="fade"
+        transparent={false}
+        statusBarTranslucent={true}
+      >
+        <StatusBar hidden />
+        <View style={styles.modalContainer}>
+          <TouchableOpacity
+            onPress={() => setShowTrailer(undefined)}
+            style={styles.modalCloseButton}
+          >
+            <Text style={styles.closeText}>Close</Text>
+          </TouchableOpacity>
+          <SafeAreaView>
+            <YoutubePlayer
+              height={300}
+              play={true}
+              videoId={showTrailer}
+              onChangeState={(state: string) => {
+                if (state === 'ended') setShowTrailer(undefined)
+              }}
+            />
+          </SafeAreaView>
+        </View>
+      </Modal>
     </View>
   )
 }
@@ -232,5 +300,26 @@ const styles = StyleSheet.create({
   },
   startSection: {
     width: '100%',
+  },
+  modalContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: '#000000',
+    justifyContent: 'center',
+  },
+  modalCloseButton: {
+    position: 'absolute',
+    top: 80,
+    right: 20,
+    zIndex: 1,
+  },
+  closeText: {
+    fontFamily: 'PoppinsRegular',
+    fontWeight: 600,
+    fontSize: 18,
+    color: Colors.light.white,
   },
 })

@@ -22,7 +22,7 @@ import MoreIcon from '../assets/svgs/moreIcon.svg'
 
 const SearchStack = createNativeStackNavigator({
   screens: {
-    Watch: {
+    TabScreen: {
       screen: Watch,
       options: {
         headerShown: false,

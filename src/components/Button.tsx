@@ -7,6 +7,8 @@ type ButtonProps = {
   backgroundColor?: string
   block?: boolean
   icon?: React.ElementType
+  onPress?: () => void
+  disabled?: boolean
 }
 
 export function Button({
@@ -14,11 +16,21 @@ export function Button({
   icon: Icon,
   backgroundColor = 'transparent',
   block = false,
+  onPress,
+  disabled,
 }: ButtonProps) {
   return (
     <TouchableOpacity
-      style={[styles.button, { backgroundColor, width: block ? '100%' : 'auto' }]}
-      onPress={() => {}}
+      style={[
+        styles.button,
+        {
+          backgroundColor: disabled ? `${Colors.light.gray}3C` : backgroundColor,
+          borderColor: disabled ? Colors.light.gray : Colors.light.lightBlue,
+          width: block ? '100%' : 'auto',
+        },
+      ]}
+      onPress={!disabled && typeof onPress === 'function' ? onPress : undefined}
+      disabled={disabled}
     >
       {Icon && <Icon fill={Colors.light.white} width={12} height={12} />}
       <Text style={styles.buttonText}>{title}</Text>
